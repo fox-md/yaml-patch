@@ -1,7 +1,7 @@
 package yamlpatch_test
 
 import (
-	yamlpatch "github.com/krishicks/yaml-patch"
+	yamlpatch "github.com/fox-md/yaml-patch"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

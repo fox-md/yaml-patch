@@ -3,7 +3,7 @@ package yamlpatch_test
 import (
 	"bytes"
 
-	yamlpatch "github.com/krishicks/yaml-patch"
+	yamlpatch "github.com/fox-md/yaml-patch"
 	yaml "gopkg.in/yaml.v2"
 
 	. "github.com/onsi/ginkgo"
