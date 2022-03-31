@@ -1,4 +1,4 @@
-module yamlpatch
+module github.com/fox-md/yaml-patch
 
 go 1.17
 
