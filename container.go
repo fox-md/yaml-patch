@@ -49,7 +49,7 @@ func (n *nodeMap) Get(key string) (*Node, error) {
 func (n *nodeMap) Remove(key string) error {
 	_, ok := (*n)[key]
 	if !ok {
-		return fmt.Errorf("Unable to remove nonexistent key: %s", key)
+		return fmt.Errorf("unable to remove nonexistent key: %s", key)
 	}
 
 	delete(*n, key)
@@ -76,7 +76,7 @@ func (n *nodeSlice) Set(index string, val *Node) error {
 	copy(ary, cur)
 
 	if i >= len(ary) {
-		return fmt.Errorf("Unable to access invalid index: %d", i)
+		return fmt.Errorf("unable to access invalid index: %d", i)
 	}
 
 	ary[i] = val
@@ -118,7 +118,7 @@ func (n *nodeSlice) Get(index string) (*Node, error) {
 		return (*n)[i], nil
 	}
 
-	return nil, fmt.Errorf("Unable to access invalid index: %d", i)
+	return nil, fmt.Errorf("unable to access invalid index: %d", i)
 }
 
 func (n *nodeSlice) Remove(index string) error {
@@ -130,7 +130,7 @@ func (n *nodeSlice) Remove(index string) error {
 	cur := *n
 
 	if i >= len(cur) {
-		return fmt.Errorf("Unable to remove invalid index: %d", i)
+		return fmt.Errorf("unable to remove invalid index: %d", i)
 	}
 
 	ary := make([]*Node, len(cur)-1)

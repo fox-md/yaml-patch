@@ -1,10 +1,10 @@
 package yamlpatch
 
 import (
-	"fmt"
 	"log"
 	"strings"
 	"unicode/utf8"
+	zlog "github.com/rs/zerolog/log"
 )
 
 
@@ -18,7 +18,7 @@ func CreatePatch(patch string) (ops []byte) {
 	var patchOp string
 	var patchValue string
 
-	fmt.Println("Received patch string",patch)
+	zlog.Debug().Msg("Received patch string " + patch)
 
 	patchPath := strings.Split(patch, "=")[0]
 

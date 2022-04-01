@@ -3,7 +3,7 @@ module yamlpatch
 go 1.17
 
 require (
-	github.com/fox-md/yaml-patch v0.0.13
+	github.com/fox-md/yaml-patch v0.0.14
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.10.1
 	gopkg.in/yaml.v2 v2.4.0 // indirect

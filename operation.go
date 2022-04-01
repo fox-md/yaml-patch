@@ -82,7 +82,7 @@ func (o *Operation) Perform(c Container) error {
 	case OpTest:
 		err = tryTest(c, o)
 	default:
-		err = fmt.Errorf("Unexpected op: %s", o.Op)
+		err = fmt.Errorf("unexpected op: %s", o.Op)
 	}
 
 	return err

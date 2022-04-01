@@ -40,8 +40,7 @@ func (p Patch) Apply(doc []byte) ([]byte, error) {
 			return nil, fmt.Errorf("failed to decode doc: %s\n\n%s", string(doc), err)
 		}
 
-		var c Container
-		c = NewNode(&iface).Container()
+		c := NewNode(&iface).Container()
 
 		for _, op := range p {
 			pathfinder := NewPathFinder(c)

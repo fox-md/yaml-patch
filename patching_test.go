@@ -1,8 +1,12 @@
-package yamlpatch
+package yamlpatch_test
 
 import (
 	"bytes"
 	"testing"
+
+	yamlpatch "github.com/fox-md/yaml-patch"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 func TestCreateAddPatch(t *testing.T) {
@@ -14,7 +18,7 @@ func TestCreateAddPatch(t *testing.T) {
 
   	addPatchString := "+login=mike"
 
-	if !bytes.Equal(addPatchBytes, CreatePatch(addPatchString)) {
+	if !bytes.Equal(addPatchBytes, yamlpatch.CreatePatch(addPatchString)) {
 		t.Fatalf(`Expected and actual values do not match`)
 	}
 
@@ -29,7 +33,7 @@ func TestCreateRemovePatch(t *testing.T) {
 
 	removePatchString := "-login"
 
-	removePatch := CreatePatch(removePatchString)
+	removePatch := yamlpatch.CreatePatch(removePatchString)
 
 	if !bytes.Equal(removePatchBytes, removePatch) {
 		t.Fatalf(`Expected %q and actual %q values do not match`, removePatchBytes, removePatch)
@@ -45,7 +49,7 @@ func TestCreateReplacePatch(t *testing.T) {
 
 	removePatchString := "spec.replicas=5"
 
-	removePatch := CreatePatch(removePatchString)
+	removePatch := yamlpatch.CreatePatch(removePatchString)
 
 	if !bytes.Equal(removePatchBytes, removePatch) {
 		t.Fatalf(`Expected %q and actual %q values do not match`, removePatchBytes, removePatch)
@@ -68,10 +72,68 @@ user: fox
 
 	patchString := "spec.replicas=5;user=fox"
 
-	yamlFileOutActual := PatchFile(patchString, yamlFile)
+	yamlFileOutActual := yamlpatch.PatchFile(patchString, yamlFile)
 
 	if !bytes.Equal(yamlFileOut, yamlFileOutActual) {
 		t.Fatalf(`Expected %q and actual %q values do not match`, yamlFileOut, yamlFileOutActual)
 	}
 
 }
+
+
+var _ = Describe("Patch", func() {
+
+	Describe("PatchFile", func() {
+
+		Context("When patching should be OK", func() {
+
+			It("Patch user and replicas", func() {
+
+				yamlFile := []byte(`---
+user: bob
+spec:
+  replicas: 0
+tier: backend`)
+			
+				yamlFileExpected := []byte(`spec:
+  replicas: 5
+tier: backend
+user: fox
+`)
+			
+				patchString := "spec.replicas=5;user=fox"
+				
+				yamlFileActual := yamlpatch.PatchFile(patchString, yamlFile)
+
+				Expect(yamlFileExpected).To(Equal(yamlFileActual))
+			})
+
+		})
+
+
+		Context("When patching should not be OK", func() {
+
+			It("Patch user and replicas", func() {
+
+				yamlFile := []byte(`---
+user: bob
+spec:
+  replicas: 0
+tier: backend`)
+			
+				yamlFileExpected := []byte(`spec:
+  replicas: 5
+tier: backend
+user: fox
+`)
+			
+				patchString := "spec.replicas=5;user=mike"
+				
+				yamlFileActual := yamlpatch.PatchFile(patchString, yamlFile)
+
+				Expect(yamlFileExpected).NotTo(Equal(yamlFileActual))
+			})
+		})
+	})
+
+})
