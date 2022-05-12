@@ -17,7 +17,7 @@ jobs:
         go-version: 1.18
 
     - name: Build
-      run: go get . && go build --ldflags '-extldflags "-static"' -o yaml-patch cmd/yaml-patch/main.go
+      run: go get . && go build -compiler gccgo --gccgoflags "-static" -o yaml-patch cmd/yaml-patch/main.go
 
     - name: Create Release
       id: create_release
