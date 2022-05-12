@@ -17,7 +17,7 @@ jobs:
         go-version: 1.18
 
     - name: Build
-      run: go get . && go build -o yaml-patch cmd/yaml-patch/main.go
+      run: go get . && go build --ldflags '-extldflags "-static"' -o yaml-patch cmd/yaml-patch/main.go
 
     - name: Create Release
       id: create_release
@@ -41,7 +41,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
         asset_path: ./yaml-patch
-        asset_name: yaml-patch-linux-arm64
+        asset_name: yaml-patch-linux-amd64
         asset_content_type: application/binary
 
 #     - name: Test
